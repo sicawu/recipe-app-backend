@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const Recipe = require('./models/Recipe');
+const ShoppingList = require('./models/ShoppingList');
 
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/recipeapp')
@@ -97,6 +98,38 @@ app.delete('/recipes/:id', async (req, res) => {
   try {
     await Recipe.findOneAndDelete({ id: req.params.id });
     res.json({ message: 'Recipe deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// SHOPPING LISTS ROUTES
+// POST /shopping-lists
+app.post('/shopping-lists', async (req, res) => {
+  try {
+    const shoppingList = new ShoppingList(req.body);
+    const saved = await shoppingList.save();
+    res.status(201).json(saved);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /shopping-lists
+app.get('/shopping-lists', async (req, res) => {
+  try {
+    const lists = await ShoppingList.find().sort({ createdAt: -1 }).lean();
+    res.json(lists);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /shopping-lists/:id
+app.delete('/shopping-lists/:id', async (req, res) => {
+  try {
+    await ShoppingList.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Shopping list deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
