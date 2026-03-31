@@ -125,6 +125,17 @@ app.get('/shopping-lists', async (req, res) => {
   }
 });
 
+// GET /shopping-lists/:id
+app.get('/shopping-lists/:id', async (req, res) => {
+  try {
+    const list = await ShoppingList.findById(req.params.id).lean();
+    if (!list) return res.status(404).json({ error: 'List not found' });
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // DELETE /shopping-lists/:id
 app.delete('/shopping-lists/:id', async (req, res) => {
   try {

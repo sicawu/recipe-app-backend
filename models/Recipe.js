@@ -25,7 +25,13 @@ const recipeSchema = new mongoose.Schema({
     amount: Number,
     unit: String
   }],
-  instructions: [String]
+  instructions: [String],
+  tip: String,
+  dressing: [{
+    name: String,
+    amount: Number,
+    unit: String
+  }]
 }, {
   timestamps: true
 });
