@@ -22,6 +22,7 @@ const recipeSchema = new mongoose.Schema({
   description: String,
   ingredients: [{
     name: String,
+    category: String,
     amount: Number,
     unit: String
   }],
@@ -29,6 +30,7 @@ const recipeSchema = new mongoose.Schema({
   tip: String,
   dressing: [{
     name: String,
+    category: String,
     amount: Number,
     unit: String
   }]
