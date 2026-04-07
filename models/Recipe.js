@@ -28,6 +28,10 @@ const recipeSchema = new mongoose.Schema({
   }],
   instructions: [String],
   tip: String,
+  fixedAmount: {
+    type: Boolean,
+    default: false
+  },
   dressing: [{
     name: String,
     category: String,
